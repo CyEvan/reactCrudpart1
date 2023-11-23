@@ -1,6 +1,6 @@
 import Student from "./Students";
 import {useState, useEffect} from 'react';
-import { getFirestore, doc, onSnapshot, collection, deleteDoc, addDoc} from "firebase/firestore";
+import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, updateDoc, doc } from "firebase/firestore";
 import firebaseApp from "./firebaseConfig";
 function Home(){
  
@@ -12,6 +12,8 @@ function Home(){
     });
 
      const [studentList,  setStudentList] = useState([]);
+
+     const [editToggle, setEditToggle] = useState(false);
         
      useEffect(() =>{
 
@@ -77,6 +79,40 @@ function Home(){
             );
           
      }
+
+     const updateStudent = (studentID, firstname, lastname, grade) => {
+      setEditToggle(true);
+
+         setStudent({
+             studentID: studentID,
+             firstname: firstname,
+             lastname: lastname,
+             grade: grade
+         });
+  }
+
+     const handleStudentUpdate = () => {
+
+         // Initialize Cloud Firestore and get a reference to the service
+         const db = getFirestore(firebaseApp);
+  
+        const studentRef = doc(db, "students", student.studentID);
+
+        updateDoc(studentRef, {
+            firstname: student.firstname,
+            lastname: student.lastname,
+            grade: student.grade
+         });
+
+         setEditToggle(false);
+         setStudent({
+            firstname: '',
+            lastname: '',
+            grade: '',
+        });
+     }
+
+
      return( 
       <section>
         <h1 className="fw-bold">Student Records 👨‍🎓</h1>
@@ -93,7 +129,7 @@ function Home(){
                      })}
                      value={student.firstname}
                      className="form-control" 
-                     type="text" placeholder="Cy "
+                     type="text" 
                      />
             </div>
         
@@ -106,7 +142,7 @@ function Home(){
                   })}
                   value={student.lastname}
                   className="form-control" 
-                  type="text" placeholder="Evan "
+                  type="text" 
                   />
             </div>
 
@@ -123,19 +159,35 @@ function Home(){
                />
             </div>
             
-            <div className="col-md-2">
-             <button onClick={()=>{addStudent()}} className="btn btn-dark mt-3">Add ➕</button>
-            </div>
+            {
+               editToggle
+               
+               ?
 
-             <div className="alert alert-light">
-              <h3 className="fw-bold">{student.firstname} {student.lastname} {student.grade}</h3>
-             </div>
-        
-         </div>
-         </div>
-         <br />
+               (
+                  
+                  <div className="col-md-2">
+                     <button onClick={()=>{handleStudentUpdate()}} className="btn btn-success mt-3">Update </button>
+                  </div>
+               )
 
-          
+               :
+               
+               (
+                  <div className="col-md-2">
+                     <button onClick={()=>{addStudent()}} className="btn btn-dark mt-3">Add ➕</button>
+                  </div>
+     
+               )
+              }
+
+               <div className="alert alert-light">
+                     <h3 className="fw-bold">{student.firstname} {student.lastname} {student.grade}</h3>
+                  </div>
+               </div>
+               </div>
+               <br />
+
          {
             //Passing Props
             studentList.map((studentRecord) => (
@@ -144,6 +196,7 @@ function Home(){
                lastname={studentRecord.lastname}
                grade={studentRecord.grade}
                deleteStudent ={deleteStudent}
+               updateStudent ={updateStudent}
                studentID={studentRecord.student_id}
                 />
             ))
