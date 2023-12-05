@@ -4,6 +4,7 @@ import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Home from "./pages/Home.jsx";
 import NotFound from "./NotFound.jsx";
+import Login from "./pages/Login.jsx";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
@@ -16,7 +17,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
-
+          <Route path="login" element={<Login />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
