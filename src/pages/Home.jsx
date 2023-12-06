@@ -2,6 +2,8 @@ import Student from "./Students";
 import {useState, useEffect} from 'react';
 import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, updateDoc, doc } from "firebase/firestore";
 import firebaseApp from "./firebaseConfig";
+
+
 function Home(){
  
      const [student, setStudent] = useState({
