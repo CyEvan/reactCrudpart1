@@ -22,7 +22,7 @@ function Layout(){
                         <Link className="navbar-brand  text-white" to="login"> Login </Link>
                         </li>
                         <li className="nav-item">
-                        <Link className="navbar-brand  text-white" to="login"> Register </Link>
+                        <Link className="navbar-brand  text-white" to="register"> Register </Link>
                         </li>
                     </ul>
                     </div>

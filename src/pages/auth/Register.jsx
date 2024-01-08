@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import firebaseApp from "./firebaseConfig";
+import firebaseApp from "../firebaseConfig";
 import { useState } from 'react';
 
 
-function Login() {
+function Register() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -36,18 +36,21 @@ function Login() {
 
     return (
         <div className="container border p-5 rounded">
-            <h1 className="fw-bold">Login</h1>
-            <p>Enter yout email and password to login.</p>
+            <h1 className="fw-bold">Registeration</h1>
+            <p>Create your account here.</p>
             <label htmlFor="email">Email</label>
 
             <input id="text" type="email" className="form-control" onChange={(e) => setEmail(e.target.value)} value={email} />
             <label htmlFor="password" className="mt-3">Password</label>
             <input id="text" type="password" className="form-control" onChange={(e) => setPassword(e.target.value)} value={password} />
-            <button className="btn btn-dark mt-3" onClick={() => handleLogin()} >Login</button>
+            <label htmlFor="password" className="mt-3">Confirm password</label>
+            <button className="btn btn-dark mt-3
+            
+            " onClick={() => handleLogin()} >Register</button>
             <hr />
-            <Link to="login" >Don't have an account? Register here</Link>
+            <Link to="/login" >Already have an account? login here</Link>
         </div>
 
     )
 }
-export default Login;
+export default Register;
